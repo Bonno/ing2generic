@@ -1,6 +1,6 @@
 # ing2generic
 
- This script converts the ing <www.ing.nl> csv files into more generic csv files which can be imported by FireflyIII <https://github.com/JC5/firefly-iii>
+ This script converts the ing <https://www.ing.nl> csv files into more generic csv files which can be imported by FireflyIII <https://github.com/JC5/firefly-iii>
  
  Usage
 -----

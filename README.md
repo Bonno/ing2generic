@@ -22,4 +22,4 @@
 
 Output
 ------
-#. A generic csv file converted from the csv file (default in the folder ./converted)
+A generic csv file converted from the csv file (default in the folder ./converted)

@@ -146,7 +146,9 @@ with open(args.csvfile, 'rb') as csvfile:
 		if row['Naam / Omschrijving'].find('Toprekening') != -1:
 			Description = row['Naam / Omschrijving']
 			OpposingIban = SavingIBAN
-		
+
+		Description = (Description[:100] + '..') if len(Description) > 100 else Description
+
 		ParsedDesc = {}
 		if (Category != None):
 			ParsedDesc["CATEGORY"] = Category

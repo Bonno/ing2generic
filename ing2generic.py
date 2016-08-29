@@ -26,45 +26,57 @@ import os
 SavingIBAN = 'NL12RBOS0606327219' # random generated IBAN
 
 def CategoryTransaction(desc):
+	if (re.search(r"(Autocentr|MCS)", desc, re.I)):
+		return ["Auto:Onderhoud", "Auto"]
+	if (re.search(r"(TAMOIL|SHELL|TINQ|TANGO|BP|Esso)", desc, re.I)):
+		return ["Auto:Benzine", "Auto"]
 	if (re.search(r"(KINDERBIJSLAG|SALARIS)", desc, re.I)):
 		return ["Inkomen", "Inkomen"]
-	if (re.search(r"(KINDEX)", desc, re.I)):
+	if (re.search(r"(KINDEX|Norlandia)", desc, re.I)):
 		return ["Kinderen:Kinderopvang", "Kinderen"]
-	if (re.search(r"(jumbo|kruidvat|ALBERT HEIJN|Gall & Gall|Sligro|Etos|Primera|PLUS |C1000|EMTE|LIDL|ALDI|V.O.F. J. en S. Smit|Kaaskoerier|Hoogvliet)", desc, re.I)):
+	if (re.search(r"(jumbo|kruidvat|ALBERT HEIJN|AH to go|Gall & Gall|Sligro|Etos|Primera|PLUS |C1000|EMTE|LIDL|ALDI|SPAR|V.O.F. J. en S. Smit|Kaaskoerier|Kaashand|Hoogvliet|DIRK VDBROEK|Verhoog|HWBiofoods)", desc, re.I)):
 		return ["Boodschappen", "Boodschappen"]
 	if (re.search(r"(belastingdienst|Belastingsamenwerking)", desc, re.I)):
 		return ["Belastingen","Belastingen"]
 	if (re.search(r"(Simyo)", desc, re.I)):
 		return ["Telefoon","GWE"]
-	if (re.search(r"(SCHADEVERZEKERIN|INSHARED|FBTO|ZORGVERZEKERINGEN|Delta Lloyd|NATIONALE NEDERLANDEN|Allianz|ZORGVERZEKER|TAF)", desc, re.I)):
+	if (re.search(r"(DUNEA DUIN WATER|Energie)", desc, re.I)):
+		return ["Energie/Water","GWE"]
+	if (re.search(r"(Ziggo)", desc, re.I)):
+		return ["Televisie","GWE"]
+	if (re.search(r"(SCHADEVERZEKERIN|INSHARED|FBTO|ZORGVERZEKERINGEN|Delta Lloyd|NATIONALE NEDERLANDEN|Allianz|ZORGVERZEKER|TAF|ASSURANTIE|Polis)", desc, re.I)):
 		return ["Verzekeringen","Verzekeringen"]
-	if (re.search(r"(BRABANT WATER)", desc, re.I)):
-		return ["Engerie/Water","GWE"]
 	if (re.search(r"(Hypotheek|Hypotrust)", desc, re.I)):
-		return "Hypotheek"
+		return ["Huis:Hypotheek", "Hypotheek"]
+	if (re.search(r"(Gamma|Praxis|Karwei|Warmteservice|HEYMANS)", desc, re.I)):
+		return ["Huis:Verbouwing","Huis"]
+	if (re.search(r"(H-Cleaning)", desc, re.I)):
+		return ["Huis:Schoonmaak","Huis"]
+	if (re.search(r"(Ikea|Eigen Huis)", desc, re.I)):
+		return ["Huis:Overig","Huis"]
+	if (re.search(r"(INTRATUIN|Bosrand)", desc, re.I)):
+		return ["Huis:Tuin","Huis"]
 	if (re.search(r"(GEA)", desc, re.I)):
 		return ["Contanten","Contanten"]
-	if (re.search(r"(Esprit|Hunkemoller|ECCO|MS MODE|Bon ?Prix|Etam|Chique Dress|Schoenenreus|HarenSchoenen|VAN DAL (B.V.|Mannenmode)|C\&A |ZEEMAN|Wibra|Bijou Brigitte)", desc, re.I)):
+	if (re.search(r"(Esprit|Hunkemoller|ECCO|MS MODE|Bon ?Prix|Etam|Chique Dress|Schoenenreus|HarenSchoenen|VAN DAL (B.V.|Mannenmode)|C\&A |ZEEMAN|Wibra|Bijou Brigitte|Primark)", desc, re.I)):
 		return ["Kleding","Kleding"]
-	if (re.search(r"([0-9]{4} Action|Hema|Ikea|BLOKKER|Gamma|Praxis|Xenos|Boerenbond|Douglas|Rituals|Trekpleister|V\&D |INTRATUIN)", desc, re.I)):
-		return ["Wonen:Diverse","Wonen"]
+	if (re.search(r"([0-9]{4} Action|Hema|BLOKKER|Xenos|Boerenbond|Douglas|Rituals|Trekpleister|V\&D )", desc, re.I)):
+		return ["Diversen:Overig","Diversen"]
 	if (re.search(r"(Intertoys|Bart Smit)", desc, re.I)):
-		return ["Wonen:Speelgoed","Wonen"]
-	if (re.search(r"(Silver Ocean|scheerenfoppen|4Launch|MMS Online|MediaMarkt|DIXONS|WEHKAMP|bol\.com)", desc, re.I)):
-		return ["Wonen:Computers","Wonen"]
-	if (re.search(r"(E Friends|DOMINO.?S|La Place|Mc Donald|Cafetaria|Copper Food|Smullers|PIZZA EXPRESS)", desc, re.I)):
+		return ["Diversen:Speelgoed","Diversen"]
+	if (re.search(r"(Silver Ocean|scheerenfoppen|4Launch|MMS Online|MediaMarkt|DIXONS)", desc, re.I)):
+		return ["Diversen:Computers","Diversen"]
+	if (re.search(r"(E Friends|DOMINO.?S|La Place|Mc Donald|Cafetaria|Copper Food|Smullers|PIZZA EXPRESS|Badmeester WASSENAAR|Boerderij Meijendel|IJskiosk Was-slag)", desc, re.I)):
 		return ["Uitjes:Uiteten","Uitjes"]
-	if (re.search(r"(TAMOIL|SHELL|TINQ|TANGO|BP)", desc, re.I)):
-		return ["Bezine", "Auto"]
 	if (re.search(r"(Creditcard|PayPal)", desc, re.I)):
 		return "Creditcard"		
 	if (re.search(r"(edutel|kpn|XS4ALL|Transip B.V.)", desc, re.I)):
 		return ["Internet", "GWE"]
-	if (re.search(r"(Autocentr|MCS)", desc, re.I)):
-		return "Onderhoud:Auto"
 	if (re.search(r"(Apotheken)", desc, re.I)):
 		return "Zorg:Apotheek"
-	if (re.search(r"(Pathe |bios)", desc, re.I)):
+	if (re.search(r"(Famed)", desc, re.I)):
+		return "Zorg:Tandarts"
+	if (re.search(r"(Pathe|bios)", desc, re.I)):
 		return ["Uitjes:Bioscoop","Uitjes"]
 	if (re.search(r"(xxx|yyy)", desc, re.I)):
 		return ["Uitjes:Diverse","Uitjes"]

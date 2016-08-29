@@ -118,7 +118,7 @@ if not os.path.exists(os.path.join(os.getcwd(), args.dir)):
 filepath = os.path.join(os.getcwd(), args.dir, filename)
 
 outfile = open(filepath,'w')
-outfile.write('"date-transaction", "account-iban", "description", "budget-name", "category-name", "amount", "opposing-iban","opposing-name"\n')
+outfile.write('"date-transaction", "account-iban", "debit-credit", "amount", "opposing-iban","opposing-name", "budget-name", "category-name", "description"\n')
 
 with open(args.csvfile, 'rb') as csvfile:
 	 #Open the csvfile as a Dictreader
@@ -159,12 +159,8 @@ with open(args.csvfile, 'rb') as csvfile:
 		
 			if args.convert:
 				row['Bedrag (EUR)'] = row['Bedrag (EUR)'].replace(",", ".")
-			if row['Af Bij'] == 'Bij':
-				Amount = row['Bedrag (EUR)']
-			else:
-				Amount = "-"+row['Bedrag (EUR)']
 			   
-			outfile.write("\"" + row['Datum'] + "\",\"" + Account + "\",\"" + Description + "\",\"" + ParsedDesc["BUDGET"] + "\",\"" + ParsedDesc["CATEGORY"] + "\",\"" + Amount  + "\",\"" + OpposingIban + "\",\"" + Name + "\"\n")
+			outfile.write("\"" + row['Datum'] + "\",\"" + Account + "\",\"" + row['Af Bij'] + "\",\"" + row['Bedrag (EUR)'] + "\",\"" + OpposingIban + "\",\"" + Name + "\",\"" + ParsedDesc["BUDGET"] + "\",\"" + ParsedDesc["CATEGORY"] + "\",\"" + Description + "\"\n")
 #f.close()
 outfile.close()
 
